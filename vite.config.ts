@@ -51,10 +51,10 @@ export default defineConfig({
           if (fs.existsSync(file)) {
             let content = fs.readFileSync(file, 'utf-8');
             // 修正 manifest 路径
-            content = content.replace(/<link rel="manifest" href="[^"]*">/, '<link rel="manifest" href="/luxejapan-public/site.webmanifest">');
+            content = content.replace(/<link rel="manifest" href="[^"]*">/, '<link rel="manifest" href="/site.webmanifest">');
             // 修正所有 icon 路径
-            content = content.replace(/href="images\//g, 'href="/luxejapan-public/images/');
-            content = content.replace(/href='images\//g, "href='/luxejapan-public/images/");
+            content = content.replace(/href="images\//g, 'href="/images/');
+            content = content.replace(/href='images\//g, "href='/images/");
             fs.writeFileSync(file, content, 'utf-8');
           }
         });
@@ -100,7 +100,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: process.env.NODE_ENV === 'production' ? '/luxejapan-public/' : '/',
+  base: '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

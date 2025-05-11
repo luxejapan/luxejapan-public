@@ -2,7 +2,7 @@
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <Navbar />
   <main id="main-content">
-    <router-view />
+    <router-view :key="$i18n.locale" />
   </main>
   <Footer />
 </template>

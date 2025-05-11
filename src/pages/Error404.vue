@@ -1,51 +1,81 @@
 <template>
-  <div>
-    <PageHero :title="'404'" bg="about-bg.jpg" />
-    <SectionContainer>
-      <h2 class="error404-title">{{ t('error404.notFoundTitle') }}</h2>
-      <p class="error404-desc">{{ t('error404.notFoundDesc') }}</p>
-      <router-link :to="contactPath" class="text-link error404-link">{{ t('error404.contactUs') }}</router-link>
-    </SectionContainer>
+  <div class="error-404" data-test="error-404" role="alert" aria-live="polite">
+    <div class="error-404__content">
+      <h1 class="error-404__title">404</h1>
+      <p class="error-404__text">{{ $t('error.pageNotFound') }}</p>
+      <router-link 
+        :to="localePath('/')" 
+        class="error-404__link"
+        data-test="back-to-home"
+        :aria-label="$t('nav.home')"
+      >
+        {{ $t('error.backToHome') }}
+      </router-link>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import PageHero from '@/components/PageHero.vue'
-import SectionContainer from '@/components/SectionContainer.vue'
-import { useI18n } from 'vue-i18n'
+<script setup>
 import { useLocalePath } from '@/utils/i18n'
 
-const { t } = useI18n()
 const { localePath } = useLocalePath()
-const contactPath = localePath('/contact')
 </script>
 
 <style scoped>
-.error404-title {
-  font-size: 2rem;
-  color: var(--color-accent);
-  font-family: var(--font-primary);
-  margin-bottom: 1.2rem;
+.error-404 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 200px);
+  padding: var(--spacing-xl);
   text-align: center;
+  background: var(--color-secondary);
 }
-.error404-desc {
+
+.error-404__content {
+  max-width: 600px;
+}
+
+.error-404__title {
+  font-size: 6rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent);
+  margin: 0 0 var(--spacing-md);
+  line-height: 1;
+}
+
+.error-404__text {
+  font-size: 1.5rem;
+  margin: 0 0 var(--spacing-lg);
   color: var(--color-text);
-  font-size: 1.15rem;
-  line-height: 1.8;
-  text-align: center;
-  margin-bottom: 1.5rem;
 }
-.error404-link {
-  display: block;
-  margin: 0 auto;
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--color-accent);
-  text-decoration: underline;
-  transition: color 0.2s;
-}
-.error404-link:hover {
+
+.error-404__link {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-accent);
   color: var(--color-primary);
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  transition: background var(--transition-normal);
+}
+
+.error-404__link:hover {
+  background: var(--color-text);
+}
+
+.error-404__link:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .error-404__title {
+    font-size: 4rem;
+  }
+  
+  .error-404__text {
+    font-size: 1.25rem;
+  }
 }
 </style> 

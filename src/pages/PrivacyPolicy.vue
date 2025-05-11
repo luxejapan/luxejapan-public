@@ -6,7 +6,14 @@
       </SectionTitle>
       <div class="privacy-content">
         <div class="privacy-intro">
-          <span v-html="brandIntro"></span>
+          <span v-if="intro.includes('{brand}')">
+            {{ intro.split('{brand}')[0] }}
+            <router-link :to="contactPath" class="about__brand-link" aria-label="$t('nav.contact')">
+              <BrandLogo size="1em" />
+            </router-link>
+            {{ intro.split('{brand}')[1] }}
+          </span>
+          <span v-else v-html="intro"></span>
         </div>
         <div class="privacy-sections">
           <div v-for="(section, index) in tm('privacy.sections')" :key="index" class="privacy-section">
@@ -15,10 +22,10 @@
               <template v-if="section.title.includes('聯絡方式') || section.title.includes('Contact') || section.title.includes('Liên Hệ') || section.title.includes('연락처')">
                 <span>{{ t('privacy.contactPrefix') }}</span><br>
                 <a :href="telegramLink" class="text-link" target="_blank">
-                  <img src="/images/icons/telegram.svg" class="icon-inline gold-icon" alt="Telegram" />@{{ telegramLabel }}
+                  <img src="/icons/telegram.svg" class="icon-inline gold-icon" alt="Telegram" />@{{ telegramLabel }}
                 </a><br>
                 <a :href="lineLink" class="text-link" target="_blank">
-                  <img src="/images/icons/line.svg" class="icon-inline gold-icon" alt="LINE" />@{{ lineLabel }}
+                  <img src="/icons/line.svg" class="icon-inline gold-icon" alt="LINE" />@{{ lineLabel }}
                 </a>
               </template>
               <template v-else>
@@ -41,7 +48,6 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import BrandLogo from '@/components/BrandLogo.vue';
 import { useLocalePath } from '@/utils/i18n';
-import { computed } from 'vue';
 
 const { tm, t } = useI18n();
 const route = useRoute();
@@ -54,15 +60,7 @@ const telegramLink = t('contact.telegram.link');
 const lineLabel = t('contact.line.label');
 const lineLink = t('contact.line.link');
 
-const brandIntro = computed(() => {
-  // 用 i18n 插值替换 {brand}
-  let intro = t('privacy.intro', { brand: t('brand.short') });
-  // 用统一样式包裹品牌名
-  return intro.replace(
-    t('brand.short'),
-    `<span class='about__brand-text'>${t('brand.short')}</span>`
-  );
-});
+const intro = tm('privacy.intro');
 
 useSeo({
   title: 'privacy.title',

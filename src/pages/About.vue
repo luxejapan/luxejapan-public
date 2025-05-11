@@ -1,5 +1,5 @@
 <template>
-  <PageHero :title="$t('about.title')" bg="about-bg.jpg" />
+  <PageHero :title="$t('about.title')" bg="/images/about-bg.jpg" />
   <main id="main-content" tabindex="-1">
     <h1 class="visually-hidden">{{ $t('about.title') }}</h1>
     <p v-for="(p, i) in tm('about.story.paragraphs')" :key="'about-p'+i">
@@ -17,7 +17,14 @@
     </ul>
     <h2>{{ $t('about.story.experienceTitle') }}</h2>
     <p>
-      <span v-html="$t('about.story.experienceParagraph', { brand: '<span class=\'about__brand-text\'>Luxe Japan</span>' })"></span>
+      <span v-if="experience.includes('{brand}')">
+        {{ experience.split('{brand}')[0] }}
+        <router-link :to="contactPath" class="about__brand-link" aria-label="$t('nav.contact')">
+          <BrandLogo size="1em" />
+        </router-link>
+        {{ experience.split('{brand}')[1] }}
+      </span>
+      <span v-else v-html="experience"></span>
     </p>
     <ul>
       <li v-for="(item, i) in tm('about.story.experienceList')" :key="'about-exp-li'+i">{{ item }}</li>
@@ -57,12 +64,12 @@ const route = useRoute();
 const { localePath } = useLocalePath();
 const contactPath = localePath('/contact');
 
-const buildTime = import.meta.env.VITE_BUILD_TIME;
+const experience = tm('about.story.experienceParagraph');
 
 useSeo({
   title: 'about.title',
   description: 'about.philosophyDesc',
-  image: 'about-bg.jpg',
+  image: '/assets/images/about-bg.jpg',
   canonical: window.location.origin + route.fullPath,
   alternates: {
     'zh-tw': `/zh-tw/about`,
@@ -109,12 +116,5 @@ li {
   display: inline-block;
   vertical-align: middle;
   text-decoration: none;
-}
-.about__brand-text {
-  color: #D4AF37;
-  font-family: 'Playfair Display', serif;
-  font-weight: bold;
-  margin: 0 0.2em;
-  letter-spacing: 0.05em;
 }
 </style> 

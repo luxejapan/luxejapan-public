@@ -6,7 +6,14 @@
       </SectionTitle>
       <div class="terms-content">
         <div class="terms-intro">
-          <span v-html="termsIntro"></span>
+          <span v-if="desc.includes('{brand}')">
+            {{ desc.split('{brand}')[0] }}
+            <router-link :to="contactPath" class="terms__brand-link" aria-label="$t('nav.contact')">
+              <BrandLogo size="1em" />
+            </router-link>
+            {{ desc.split('{brand}')[1] }}
+          </span>
+          <span v-else v-html="desc"></span>
         </div>
         <div class="terms-sections">
           <div v-for="(section, index) in tm('terms.sections')" :key="index" class="terms-section">
@@ -21,6 +28,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import SectionContainer from '@/components/SectionContainer.vue';
 import SectionTitle from '@/components/SectionTitle.vue';
 import { useSeo } from '@/utils/useSeo';
@@ -28,25 +36,21 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import BrandLogo from '@/components/BrandLogo.vue';
 import { useLocalePath } from '@/utils/i18n';
-import { computed } from 'vue';
 
-const { tm } = useI18n();
+const { tm, t } = useI18n();
 const route = useRoute();
 const { localePath } = useLocalePath();
 const contactPath = localePath('/contact');
 
-const { t } = useI18n();
-const termsIntro = computed(() => {
-  let intro = t('terms.intro', { brand: t('brand.short') });
-  return intro.replace(
-    t('brand.short'),
-    `<span class='about__brand-text'>${t('brand.short')}</span>`
-  );
+const desc = tm('terms.description');
+console.log('desc:', desc);
+const descParts = computed(() => {
+  return desc.split(/(\{brand\})/g);
 });
 
 useSeo({
   title: 'terms.title',
-  description: 'terms.intro',
+  description: 'terms.description',
   canonical: window.location.origin + route.fullPath,
   alternates: {
     'zh-tw': `/zh-tw/terms`,

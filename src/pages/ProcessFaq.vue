@@ -1,5 +1,5 @@
 <template>
-  <PageHero :title="$t('processFaq.title')" bg="process-faq-bg.jpg" />
+  <PageHero :title="$t('processFaq.title')" bg="/images/process-faq-bg.jpg" />
   <SectionContainer>
     <h2>{{ $t('processFaq.title') }}</h2>
     <ol class="process-list">
@@ -8,11 +8,11 @@
         <template v-if="i === 0">
           {{ step.descPrefix }}
           <a :href="contacts.telegram.url" class="text-link" target="_blank">
-            <img src="/images/icons/telegram.svg" class="icon-inline gold-icon" alt="Telegram" />{{ contacts.telegram.label }}
+            <img src="/icons/telegram.svg" class="icon-inline gold-icon" alt="Telegram" />{{ contacts.telegram.label }}
           </a>
           {{ $t('common.or') }}
           <a :href="contacts.line.url" class="text-link" target="_blank">
-            <img src="/images/icons/line.svg" class="icon-inline gold-icon" alt="LINE" />{{ contacts.line.label }}
+            <img src="/icons/line.svg" class="icon-inline gold-icon" alt="LINE" />{{ contacts.line.label }}
           </a>
           {{ step.descSuffix }}
         </template>
@@ -29,11 +29,11 @@
           <template v-if="i === 0">
             {{ $t('processFaq.faq.a1Prefix') }}
             <a :href="contacts.telegram.url" class="text-link" target="_blank">
-              <img src="/images/icons/telegram.svg" class="icon-inline gold-icon" alt="Telegram" />{{ contacts.telegram.label }}
+              <img src="/icons/telegram.svg" class="icon-inline gold-icon" alt="Telegram" />{{ contacts.telegram.label }}
             </a>
             {{ $t('common.and') }}
             <a :href="contacts.line.url" class="text-link" target="_blank">
-              <img src="/images/icons/line.svg" class="icon-inline gold-icon" alt="LINE" />{{ contacts.line.label }}
+              <img src="/icons/line.svg" class="icon-inline gold-icon" alt="LINE" />{{ contacts.line.label }}
             </a>
             {{ $t('processFaq.faq.a1Suffix') }}
           </template>
@@ -61,7 +61,7 @@ const route = useRoute();
 useSeo({
   title: 'processFaq.title',
   description: 'processFaq.subtitle',
-  image: 'process-faq-bg.jpg',
+  image: '/assets/images/process-faq-bg.jpg',
   canonical: window.location.origin + route.fullPath,
   alternates: {
     'zh-tw': `/zh-tw/process-faq`,

@@ -82,7 +82,10 @@
   "footer": {
     "copyright": "© 2024 Luxe Japan. All rights reserved.",
     "privacy": "プライバシーポリシー",
-    "terms": "利用規約"
+    "terms": {
+      "title": "利用規約 - Luxe Japan Elite Escorts",
+      "description": "Luxe Japan Elite Escorts（以下「当店」）の高級エスコートサービスをご利用いただきありがとうございます。双方の安全と権利を守るため、以下の規約をよくお読みいただき、遵守してください。"
+    }
   },
   "error404": {
     "message": "お探しのページは存在しません。",
